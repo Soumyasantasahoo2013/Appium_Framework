@@ -8,21 +8,30 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.appium.GenericUtils.PropertyFileUtility;
+
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 
 public class LaunchCalculator {
 	
-	public static void main(String[]args) throws MalformedURLException, InterruptedException
+	public static void main(String[]args) throws Throwable
 	{
+		PropertyFileUtility pUtil=new PropertyFileUtility();
+		String devName=pUtil.readDataFromPropertyFile("deviceName");
+		String autoName=pUtil.readDataFromPropertyFile("automationName");
+		String platName=pUtil.readDataFromPropertyFile("platformName");
+		String platVersion=pUtil.readDataFromPropertyFile("platformVersion");
+		String udid=pUtil.readDataFromPropertyFile("UDID");
+		
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
-		dc.setCapability("deviceName", "Galaxy M30s");
-		dc.setCapability("automationName", "appium");
-		dc.setCapability("platformName", "Android");
-		dc.setCapability("platformVersion", "11");
-		dc.setCapability("UDID", "RZ8M83ZJH2W");
+		dc.setCapability("deviceName", devName);
+		dc.setCapability("automationName", autoName);
+		dc.setCapability("platformName", platName);
+		dc.setCapability("platformVersion", platVersion);
+		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
 		dc.setCapability("appPackage", "com.sec.android.app.popupcalculator");
 		dc.setCapability("appActivity", ".Calculator");

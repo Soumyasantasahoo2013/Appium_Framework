@@ -6,19 +6,28 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.appium.GenericUtils.PropertyFileUtility;
+
 import io.appium.java_client.android.AndroidDriver;
 
 public class LaunchAPIDemos {
 	
-	public static void main(String[]args) throws MalformedURLException
+	public static void main(String[]args) throws Throwable
 	{
+		PropertyFileUtility pUtil=new PropertyFileUtility();
+		String devName=pUtil.readDataFromPropertyFile("deviceName");
+		String autoName=pUtil.readDataFromPropertyFile("automationName");
+		String platName=pUtil.readDataFromPropertyFile("platformName");
+		String platVersion=pUtil.readDataFromPropertyFile("platformVersion");
+		String udid=pUtil.readDataFromPropertyFile("UDID");
+		
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
-		dc.setCapability("deviceName", "Galaxy M30s");
-		dc.setCapability("automationName", "appium");
-		dc.setCapability("platformName", "Android");
-		dc.setCapability("platformVersion", "11");
-		dc.setCapability("UDID", "RZ8M83ZJH2W");
+		dc.setCapability("deviceName", devName);
+		dc.setCapability("automationName", autoName);
+		dc.setCapability("platformName", platName);
+		dc.setCapability("platformVersion", platVersion);
+		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
 		dc.setCapability("appPackage", "io.appium.android.apis");
 		dc.setCapability("appActivity", ".ApiDemos");

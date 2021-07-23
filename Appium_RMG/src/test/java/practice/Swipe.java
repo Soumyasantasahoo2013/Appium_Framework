@@ -7,19 +7,28 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.appium.GenericUtils.JSONFileUtility;
+
 import io.appium.java_client.android.AndroidDriver;
 
 public class Swipe {
 	
-	public static void main(String[]args) throws MalformedURLException
+	public static void main(String[]args) throws Throwable
 	{
+		JSONFileUtility jUtil=new JSONFileUtility();
+		String devName=jUtil.readDataFromJSON("deviceName");
+		String autoName=jUtil.readDataFromJSON("automationName");
+		String platName=jUtil.readDataFromJSON("platformName");
+		String platVersion=jUtil.readDataFromJSON("platformVersion");
+		String udid=jUtil.readDataFromJSON("UDID");
+		
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
-		dc.setCapability("deviceName", "Galaxy M30s");
-		dc.setCapability("automationName", "appium");
-		dc.setCapability("platformName", "Android");
-		dc.setCapability("platformVersion", "11");
-		dc.setCapability("UDID", "RZ8M83ZJH2W");
+		dc.setCapability("deviceName", devName);
+		dc.setCapability("automationName", autoName);
+		dc.setCapability("platformName", platName);
+		dc.setCapability("platformVersion", platVersion);
+		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
 		dc.setCapability("appPackage", "jp.rallwell.siriuth.touchscreentest");
 		dc.setCapability("appActivity", ".TouchScreenTestActivity");

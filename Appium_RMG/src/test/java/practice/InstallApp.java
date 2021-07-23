@@ -6,19 +6,28 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.appium.GenericUtils.PropertyFileUtility;
+
 import io.appium.java_client.android.AndroidDriver;
 
 public class InstallApp {
 
-	public static void main(String[]args) throws MalformedURLException, InterruptedException
+	public static void main(String[]args) throws Throwable
 	{
+		PropertyFileUtility pUtil=new PropertyFileUtility();
+		String devName=pUtil.readDataFromPropertyFile("deviceName");
+		String autoName=pUtil.readDataFromPropertyFile("automationName");
+		String platName=pUtil.readDataFromPropertyFile("platformName");
+		String platVersion=pUtil.readDataFromPropertyFile("platformVersion");
+		String udid=pUtil.readDataFromPropertyFile("UDID");
+		
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
-		dc.setCapability("deviceName", "Galaxy M30s");
-		dc.setCapability("automationName", "appium");
-		dc.setCapability("platformName", "Android");
-		dc.setCapability("platformVersion", "11");
-		dc.setCapability("UDID", "RZ8M83ZJH2W");
+		dc.setCapability("deviceName", devName);
+		dc.setCapability("automationName", autoName);
+		dc.setCapability("platformName", platName);
+		dc.setCapability("platformVersion", platVersion);
+		dc.setCapability("UDID", udid);
 
 		//Install App in Phone (iOs & Android)
 		dc.setCapability("app", "C:\\Users\\SOUMYASANTA SAHOO\\Downloads\\Touch Screen Test_v1.7.14_apkpure.com.apk");
