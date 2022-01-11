@@ -1,20 +1,31 @@
 package practice;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.JSONFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
 public class ZoomAction {
 
-	public static void main(String[]args) throws Throwable
+	@Test
+	public void zoomAction() throws Throwable
 	{
+		
+		AppiumDriverLocalService server = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+				.withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+				.usingPort(4723)
+				.withLogFile(new File("../AppiumSDET17/Logs.txt")));
 		JSONFileUtility jUtil=new JSONFileUtility();
 		String devName=jUtil.readDataFromJSON("deviceName");
 		String autoName=jUtil.readDataFromJSON("automationName");

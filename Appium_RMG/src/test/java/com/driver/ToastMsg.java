@@ -1,20 +1,18 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.PropertyFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class LaunchAPIDemos {
+public class ToastMsg {
 	
-	@Test
-	public void launchAPIDemos() throws Throwable
+	public static void main(String[]args) throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -31,8 +29,8 @@ public class LaunchAPIDemos {
 		dc.setCapability("platformVersion", platVersion);
 		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
-		dc.setCapability("appPackage", "io.appium.android.apis");
-		dc.setCapability("appActivity", ".ApiDemos");
+		dc.setCapability("appPackage", "com.androidsample.generalstore");
+		dc.setCapability("appActivity", ".SplashActivity");
 		
 		//Appium server URL
 		URL url=new URL("http://localhost:4723/wd/hub");
@@ -40,6 +38,10 @@ public class LaunchAPIDemos {
 		AndroidDriver driver=new AndroidDriver(url,dc);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		driver.findElement(By.id("com.androidsample.generalstore:id/btnLetsShop")).click();
+		String toastmsg=driver.findElement(By.xpath("//android.widget.Toast[1]")).getAttribute("name");
+		System.out.println(toastmsg);
 	}
 
 }

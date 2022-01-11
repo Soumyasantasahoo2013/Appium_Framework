@@ -1,27 +1,24 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
-import com.appium.GenericUtils.JSONFileUtility;
+import com.appium.GenericUtils.PropertyFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class LaunchTouchScreenTest {
+public class RunAppInBackGround {
 	
-	@Test
-	public void launchTouchScreen() throws Throwable
+	public static void main(String[]args) throws Throwable
 	{
-		JSONFileUtility jUtil=new JSONFileUtility();
-		String devName=jUtil.readDataFromJSON("deviceName");
-		String autoName=jUtil.readDataFromJSON("automationName");
-		String platName=jUtil.readDataFromJSON("platformName");
-		String platVersion=jUtil.readDataFromJSON("platformVersion");
-		String udid=jUtil.readDataFromJSON("UDID");
+		PropertyFileUtility pUtil=new PropertyFileUtility();
+		String devName=pUtil.readDataFromPropertyFile("deviceName");
+		String autoName=pUtil.readDataFromPropertyFile("automationName");
+		String platName=pUtil.readDataFromPropertyFile("platformName");
+		String platVersion=pUtil.readDataFromPropertyFile("platformVersion");
+		String udid=pUtil.readDataFromPropertyFile("UDID");
 		
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
@@ -31,8 +28,8 @@ public class LaunchTouchScreenTest {
 		dc.setCapability("platformVersion", platVersion);
 		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
-		dc.setCapability("appPackage", "jp.rallwell.siriuth.touchscreentest");
-		dc.setCapability("appActivity", ".TouchScreenTestActivity");
+		dc.setCapability("appPackage", "io.appium.android.apis");
+		dc.setCapability("appActivity", ".ApiDemos");
 		
 		//Appium server URL
 		URL url=new URL("http://localhost:4723/wd/hub");
@@ -40,6 +37,8 @@ public class LaunchTouchScreenTest {
 		AndroidDriver driver=new AndroidDriver(url,dc);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		driver.runAppInBackground(10);
 	}
 
 }

@@ -1,20 +1,18 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.PropertyFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class LaunchAPIDemos {
+public class Notifications {
 	
-	@Test
-	public void launchAPIDemos() throws Throwable
+	public static void main(String[]args) throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -40,6 +38,20 @@ public class LaunchAPIDemos {
 		AndroidDriver driver=new AndroidDriver(url,dc);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		driver.findElement(By.id("com.android.permissioncontroller:id/continue_button")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.id("android:id/button1")).click();
+		Thread.sleep(1000);
+		driver.findElementByAccessibilityId("Content").click();
+		Thread.sleep(1000);
+		driver.findElementByAccessibilityId("Search").click();
+		Thread.sleep(1000);
+		driver.findElementByAccessibilityId("Notifying Service Controller").click();
+		Thread.sleep(1000);
+		driver.findElementById("io.appium.android.apis:id/notify_app").click();
+		
+		driver.openNotifications();
 	}
 
 }

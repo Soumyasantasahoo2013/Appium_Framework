@@ -1,24 +1,19 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
-import com.appium.GenericUtils.BaseClass;
 import com.appium.GenericUtils.PropertyFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class APIDemosTestScript extends BaseClass {
-	
-	@Test
-	public void apiDemosTestScript() throws Throwable
+public class Switch_App2 {
+
+	public static void main(String[]args) throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -26,7 +21,7 @@ public class APIDemosTestScript extends BaseClass {
 		String platName=pUtil.readDataFromPropertyFile("platformName");
 		String platVersion=pUtil.readDataFromPropertyFile("platformVersion");
 		String udid=pUtil.readDataFromPropertyFile("UDID");
-		
+
 		DesiredCapabilities dc=new DesiredCapabilities();
 		//Common Desired Capabilities
 		dc.setCapability("deviceName", devName);
@@ -35,29 +30,43 @@ public class APIDemosTestScript extends BaseClass {
 		dc.setCapability("platformVersion", platVersion);
 		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
-		dc.setCapability("appPackage", "io.appium.android.apis");
-		dc.setCapability("appActivity", ".ApiDemos");
-		
+		dc.setCapability("appPackage", "com.androidsample.generalstore");
+		dc.setCapability("appActivity", ".SplashActivity");
+
 		//Appium server URL
 		URL url=new URL("http://localhost:4723/wd/hub");
-		
+
 		AndroidDriver driver=new AndroidDriver(url,dc);
-		
+
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		driver.findElement(By.id("com.androidsample.generalstore:id/nameField")).sendKeys("Soumya");
+
+		driver.findElement(By.id("com.androidsample.generalstore:id/radioMale")).click();
+
+		driver.findElement(By.id("com.androidsample.generalstore:id/btnLetsShop")).click();
+
+		driver.findElementByXPath("//android.widget.TextView[@resource-id='com.androidsample.generalstore:id/productAddCart']").click();
 		
-		driver.findElement(By.id("com.android.permissioncontroller:id/continue_button")).click();
-		Thread.sleep(1000);
-		driver.findElement(By.id("android:id/button1")).click();
-		Thread.sleep(1000);
-		//driver.findElementByAccessibilityId("Views").click();
+		driver.findElement(By.id("com.androidsample.generalstore:id/appbar_btn_cart")).click();
 		
-		/*List<WebElement> options=driver.findElementsByXPath("//android.widget.TextView[@resource-id='android:id/text1']");
-		List<WebElement> options=driver.findElementsByClassName("android.widget.TextView");
-		for(int i=1;i<options.size();i++)
+		driver.findElement(By.id("com.androidsample.generalstore:id/btnProceed")).click();
+		
+		Thread.sleep(4000);
+		
+		Set<String> windows=driver.getContextHandles();
+		
+		for(String window: windows)
 		{
-			System.out.println(options.get(i).getText());
-		}*/
+			System.out.println("Active Applications :"+window);
+		}
+		
+		Thread.sleep(1000);
+		driver.context("WEBVIEW_com.androidsample.generalstore");
+		
+		driver.findElement(By.xpath("//input[@name='q']")).sendKeys("TYSS");
+		
+		
 		
 	}
-
 }

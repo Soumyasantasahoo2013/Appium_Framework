@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.JSONFileUtility;
 
@@ -12,7 +13,8 @@ import io.appium.java_client.android.AndroidDriver;
 
 public class UninstallApp {
 
-	public static void main(String[]args) throws Throwable
+	@Test
+	public void unInstallApp() throws Throwable
 	{
 		JSONFileUtility jUtil=new JSONFileUtility();
 		String devName=jUtil.readDataFromJSON("deviceName");

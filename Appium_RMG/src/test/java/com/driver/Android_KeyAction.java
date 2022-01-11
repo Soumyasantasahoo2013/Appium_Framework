@@ -1,24 +1,19 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
-import com.appium.GenericUtils.BaseClass;
 import com.appium.GenericUtils.PropertyFileUtility;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 
-public class APIDemosTestScript extends BaseClass {
+public class Android_KeyAction {
 	
-	@Test
-	public void apiDemosTestScript() throws Throwable
+	public static void main(String[]args) throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -34,9 +29,10 @@ public class APIDemosTestScript extends BaseClass {
 		dc.setCapability("platformName", platName);
 		dc.setCapability("platformVersion", platVersion);
 		dc.setCapability("UDID", udid);
+		dc.setCapability("noRest", true);
 		//Desire Capabilities for Android
-		dc.setCapability("appPackage", "io.appium.android.apis");
-		dc.setCapability("appActivity", ".ApiDemos");
+		dc.setCapability("appPackage", "com.sec.android.app.camera");
+		dc.setCapability("appActivity", ".Camera");
 		
 		//Appium server URL
 		URL url=new URL("http://localhost:4723/wd/hub");
@@ -45,18 +41,25 @@ public class APIDemosTestScript extends BaseClass {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		driver.findElement(By.id("com.android.permissioncontroller:id/continue_button")).click();
-		Thread.sleep(1000);
-		driver.findElement(By.id("android:id/button1")).click();
-		Thread.sleep(1000);
-		//driver.findElementByAccessibilityId("Views").click();
-		
-		/*List<WebElement> options=driver.findElementsByXPath("//android.widget.TextView[@resource-id='android:id/text1']");
-		List<WebElement> options=driver.findElementsByClassName("android.widget.TextView");
-		for(int i=1;i<options.size();i++)
-		{
-			System.out.println(options.get(i).getText());
-		}*/
+		//System.out.println(AndroidKeyCode.KEYCODE_VOLUME_UP);
+		//System.out.println(AndroidKeyCode.KEYCODE_VOLUME_DOWN);
+		//System.out.println(AndroidKeyCode.BACK);
+		//System.out.println(AndroidKeyCode.ENTER);
+		//System.out.println(AndroidKeyCode.KEYCODE_BRIGHTNESS_UP);
+		//System.out.println(AndroidKeyCode.KEYCODE_BRIGHTNESS_DOWN);
+		//System.out.println(AndroidKeyCode.KEYCODE_CAMERA);
+		driver.pressKeyCode(AndroidKeyCode.BACK);
+		Thread.sleep(2000);
+		//driver.pressKeyCode(AndroidKeyCode.KEYCODE_CAMERA);
+		//Thread.sleep(2000);
+		driver.pressKeyCode(AndroidKeyCode.KEYCODE_VOLUME_DOWN);
+		Thread.sleep(2000);
+		driver.pressKeyCode(AndroidKeyCode.KEYCODE_VOLUME_UP);
+		Thread.sleep(2000);
+		driver.openNotifications();
+		driver.pressKeyCode(AndroidKeyCode.KEYCODE_BRIGHTNESS_UP);
+		Thread.sleep(2000);
+		driver.pressKeyCode(AndroidKeyCode.KEYCODE_BRIGHTNESS_DOWN);
 		
 	}
 

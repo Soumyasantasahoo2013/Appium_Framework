@@ -1,20 +1,18 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.PropertyFileUtility;
+import com.gargoylesoftware.htmlunit.javascript.host.ScreenOrientation;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class LaunchAPIDemos {
+public class Orientation {
 	
-	@Test
-	public void launchAPIDemos() throws Throwable
+	public static void main(String[]args) throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -40,6 +38,18 @@ public class LaunchAPIDemos {
 		AndroidDriver driver=new AndroidDriver(url,dc);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		org.openqa.selenium.ScreenOrientation currentscreenorientation=driver.getOrientation();
+		System.out.println(currentscreenorientation);
+		Thread.sleep(2000);
+		driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
+		
+		System.out.println(driver.getOrientation());
+		Thread.sleep(2000);
+		
+		driver.rotate(org.openqa.selenium.ScreenOrientation.PORTRAIT);
+		
+		System.out.println(driver.getOrientation());
 	}
 
 }

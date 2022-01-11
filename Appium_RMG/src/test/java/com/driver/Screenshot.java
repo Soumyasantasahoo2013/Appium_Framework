@@ -1,20 +1,26 @@
-package practice;
+package com.driver;
 
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
 import com.appium.GenericUtils.PropertyFileUtility;
+import com.google.common.io.Files;
 
 import io.appium.java_client.android.AndroidDriver;
 
-public class LaunchAPIDemos {
+public class Screenshot {
 	
 	@Test
-	public void launchAPIDemos() throws Throwable
+	public void screenshot() throws Throwable
 	{
 		PropertyFileUtility pUtil=new PropertyFileUtility();
 		String devName=pUtil.readDataFromPropertyFile("deviceName");
@@ -31,8 +37,8 @@ public class LaunchAPIDemos {
 		dc.setCapability("platformVersion", platVersion);
 		dc.setCapability("UDID", udid);
 		//Desire Capabilities for Android
-		dc.setCapability("appPackage", "io.appium.android.apis");
-		dc.setCapability("appActivity", ".ApiDemos");
+		dc.setCapability("appPackage", "com.androidsample.generalstore");
+		dc.setCapability("appActivity", ".SplashActivity");
 		
 		//Appium server URL
 		URL url=new URL("http://localhost:4723/wd/hub");
@@ -40,6 +46,23 @@ public class LaunchAPIDemos {
 		AndroidDriver driver=new AndroidDriver(url,dc);
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		Thread.sleep(4000);
+		takeScreenShot(driver, "generalstore");
 	}
+	
+	public static void takeScreenShot(WebDriver driver, String screenshotName) throws Throwable
+    {
+    	TakesScreenshot ts = (TakesScreenshot)driver;
+    	File src = ts.getScreenshotAs(OutputType.FILE);
+    	File dst = new File("./Screenshot/"+screenshotName+".PNG");
+    
+    	try {
+			FileUtils.copyFile(src, dst);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }
